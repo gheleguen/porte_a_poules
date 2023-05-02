@@ -153,7 +153,7 @@ void fermeture(){
 ```
 
 ## 4/ Références et développement. 
-Je me suis servi de [ce tutoriel](https://www.carnetdumaker.net/articles/mesurer-la-luminosite-ambiante-avec-une-photoresistance-et-une-carte-arduino-genuino/). Le branchement est celui d'un diviseur de tension (2 résistances). ![DevMRP4-1](pictures/DevMRP4-1.jpg)</br>
+Je me suis servi de [ce tutoriel](https://www.carnetdumaker.net/articles/mesurer-la-luminosite-ambiante-avec-une-photoresistance-et-une-carte-arduino-genuino/). Le branchement est celui d'un diviseur de tension (2 résistances). </br>![DevMRP4-1](pictures/DevMRP4-1.jpg)</br>
 *crédit : © TamiaLab 2016*
 
 Pour brancher la photorésistance et la tester au moyen du code suivant : 
