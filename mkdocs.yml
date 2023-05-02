@@ -1,6 +1,6 @@
 site_name: porte_a_poules
 repo_url: https://gleguencloud.xyz/gitlab/gheleguen/porte_a_poules/
-edit_uri: blob/main/docs/
+edit_uri: -/tree/main/docs
 
 nav:
     - Introduction: README.md
