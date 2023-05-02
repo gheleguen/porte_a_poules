@@ -1,7 +1,5 @@
 site_name: porte_a_poules
 repo_url: https://gleguencloud.xyz/gitlab/gheleguen/porte_a_poules/
-site_url: https://gheleguengitlab.io/base_mkdocs_material/ 
-
 edit_uri: -/edit/main/docs/
 
 nav:
