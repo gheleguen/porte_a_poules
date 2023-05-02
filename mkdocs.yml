@@ -2,7 +2,7 @@ site_name: plankton_nets
 nav:
     - Introduction: README.md
     - b1. Prototype:
-    	- b1.1 Moteur et RTC: mot_et_rtc.md 
+    	- b1.1 Moteur et RTC: dev_mot_et_rtc.md 
         
 theme:
     name: material

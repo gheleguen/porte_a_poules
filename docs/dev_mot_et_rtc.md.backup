@@ -30,6 +30,8 @@ Réaliser le circuit suivant
 ![DevMR2-3.jpg](pictures/DevMR3-1.jpg)
 
 ### 3.2 Software
+Le code suivant se trouvau aussi au format ".ino" dans l'archive dans le dossier "software" sous le nom de "dev_mot_et_rtc.ino".
+
 Flasher au moyen d'Arduino IDE le code suivant :
 
 ```cpp
