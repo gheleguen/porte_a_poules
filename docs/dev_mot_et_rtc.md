@@ -26,7 +26,7 @@ La première étape du développement de cet outil est de chercher à piloter un
  
 ## 3/ Réalisation
 ### 3.1 Hardware
-Réaliser le circuit représenté ci dessous. [Le fichier fritzing est accessible ici](pictures/DevMR2-1.jpg)
+Réaliser le circuit représenté ci dessous. [Le fichier fritzing est accessible ici](../hardware)
 ![DevMR2-3.jpg](pictures/DevMR3-1.jpg)
 
 ### 3.2 Software
