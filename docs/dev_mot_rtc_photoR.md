@@ -183,4 +183,5 @@ void loop() {
 ## 5/ Améliorations
  - Ajouter un module de carte SD qui contiendra les valeurs des variables. Pour ne pas avoir à flasher la carte pour chaque besoin. 
  - Ajouter un écran LCD pour donner l'heure des dernières ouvertures, fermetures et valeur de lumière. 
+ - Pour le contrôle utilisateur, utiliser 3 potentiomètre que l'on pourra graduer. 2 pour les bornes d'heures et 1 pour la limite de déclenchement (graduer avec un petit soleil et une lune). 
  - Si la lecture de l'intensité lumineuse pose un problème, peut-être étudier des techniques de lissage de courbe tel qu'utiliser une moyenne glissante, [comme documenté ici](https://www.aranacorp.com/fr/implementation-de-la-moyenne-glissante-dans-arduino/#:~:text=Le%20principe%20de%20la%20moyenne,l'%C3%A9tablissement%20de%20la%20moyenne.).
