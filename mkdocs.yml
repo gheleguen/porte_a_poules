@@ -1,0 +1,24 @@
+site_name: plankton_nets
+nav:
+    - Introduction: README.md
+    - b1. Prototype:
+    	- b1.1 Moteur et RTC: mot_et_rtc.md 
+        
+theme:
+    name: material
+    palette:
+      primary: yellow
+
+plugins:
+  - search
+  - i18n:
+      default_language: fr
+      languages:
+        fr: Français
+
+markdown_extensions:
+    - smarty
+    - sane_lists
+    - admonition
+    - toc:
+        permalink: true
