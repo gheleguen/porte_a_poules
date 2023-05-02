@@ -16,6 +16,7 @@ int in1 = 3;
 int in2 = 2;
 int pin_buttonA = 7; // port numérique lié au bouton poussoir 1
 int pin_buttonB = 8; // port numérique lié au bouton poussoir 2
+int photoR = A0; // Port Analogique de la photo-résistance
 
 //Introduction de variables
 int Year;
@@ -27,7 +28,8 @@ int Second;
 int interval = 1;
 int Minute_last;
 int Date_last;
-int i = 0;
+int i = 1;  //i prend la valeur 1 soit la porte est ouverte (souvent l'installation se fera plutôt en journée)
+int PR; // Varible qui stockera la valeur de la photorésistance
 
 
 void setup()
@@ -48,6 +50,7 @@ void setup()
 void loop()
 {  
   delay(1000);
+  PR = analogRead(photoR);
   Serial.println();
   Serial.print(Year);
   Serial.print("/");
@@ -60,10 +63,12 @@ void loop()
   Serial.print(Minute);
   Serial.print(":");
   Serial.print(Second);
-  if (Hour >= Houv && Hour < Hferm && i == 0) { // Si l'heure est supérieur à l'heure minimale d'ouverture et que la porte est fermé
+  Serial.println();
+  Serial.println(PR);
+  if (Hour >= Houv && Hour < Hferm && i == 0 && PR > 900) { // Si l'heure est supérieur à l'heure minimale d'ouverture et que la porte est fermé
       ouverture(); // Ouverture de la porte
    }
-  if (Hour >= Hferm && Hour > Houv && i == 1) { // Si l'heure est supérieur à l'heure minimale de fermeture et que la porte est fermé
+  if (Hour >= Hferm && Hour > Houv && i == 1 && PR < 850) { // Si l'heure est supérieur à l'heure minimale de fermeture et que la porte est fermé
       fermeture(); // Ouverture de la porte
    }
   DateTime now = RTC.now();

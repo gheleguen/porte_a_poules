@@ -1,7 +1,7 @@
 # DEV -- Un moteur piloté à l'heure
 ## 1/ Introduction
 La première étape du développement de cet outil est de chercher à piloter un moteur à courant continu de 1,5 à 3V au moyen d'une arduino UNO et d'une RTC pour donner l'heure. 
- - Dans cette configuration 1 bouton poussoir symbolise, les deux fins de courses. Le moteur devra s'arrêté lorsque ce bouton sera enclenché.
+ - Dans cette configuration 2 boutons poussoirs symbolisent, les deux fins de courses. Le moteur devra s'arrêté lorsque le bouton sera enclenché de fin de course correspondant sera enclenché.
  - Une RTC permettra de fournir l'heure en temps réel. Cette donnée permet à la porte de s'ouvrir et de se fermer. 
 
 
@@ -13,8 +13,8 @@ La première étape du développement de cet outil est de chercher à piloter un
 |Contrôleur moteur - Module L298N|![DevMR2-1](pictures/DevMR2-1.jpg)|Conrad / RS components|1|
 |Moteur DC (1,5-3v et son reducteur)|![DevMR2-2](pictures/DevMR2-2.jpg)|RS components|1|
 |Module horloge RTC DS3231|![DevMR2-3.jpg](pictures/DevMR2-3.jpg)|Conrad / RS components|1|
-|Résistances 1Kohm ou autre valeur|||3|
-|Bouton poussoir|||1|
+|Résistances 1Kohm ou autre valeur|||4|
+|Boutons poussoirs|||2|
 |Batterie 9V ou Bloc piles 9v et pile||Conrad / RS components|1|
 |Breadbord|||1|
 |Fils de breadbord mâle-mâle et femelle-mâle||||
@@ -26,7 +26,7 @@ La première étape du développement de cet outil est de chercher à piloter un
  
 ## 3/ Réalisation
 ### 3.1 Hardware
-Réaliser le circuit suivant
+Réaliser le circuit représenté ci dessous. [Le fichier fritzing est accessible ici](../hardware)
 ![DevMR2-3.jpg](pictures/DevMR3-1.jpg)
 
 ### 3.2 Software
@@ -35,41 +35,45 @@ Le code suivant se trouvau aussi au format ".ino" dans l'archive dans le dossier
 Flasher au moyen d'Arduino IDE le code suivant :
 
 ```cpp
-#include <Wire.h> // for SD stock
-#include "DS3231.h" // for rtc
+#include <Wire.h>  
+#include "DS3231.h"
 
 RTClib RTC;
 DS3231 Clock;
 
-// connect motor controller pins to Arduino digital pins
-// motor one
-int Houv = 8;
-int Mouv = 56;
-int Hferm = 17;
-int Mferm = 57;
-int enA = 4;
+//Paramètres de déclenchements de la porte
+int Houv = 8; // Heure d'ouverture
+int Mouv = 0; // Minute d'ouverture
+int Hferm = 17; //Heure de fermeture
+int Mferm = 0; // Minute de fermeture
+
+// Branchements
+int enA = 4; 
 int in1 = 3;
 int in2 = 2;
-int pin_button = 7; // port numérique lié au bouton poussoir
+int pin_buttonA = 7; // port numérique lié au bouton poussoir 1
+int pin_buttonB = 8; // port numérique lié au bouton poussoir 2
+
+//Introduction de variables
 int Year;
 int Month;
 int Date;
 int Hour;
 int Minute;
 int Second;
-int tempC;
 int interval = 1;
 int Minute_last;
 int Date_last;
 int i = 0;
 
+
 void setup()
 {
-  //Initialize Serial Monitor
-
+  //Initialise le moniteur série
   Serial.begin(9600);
   Wire.begin(); //for DS3231 for RTC
-  // set all the motor control pins to outputs
+  
+  // Defini tous les ports du contr^leur moteur comme des sorties
   pinMode(enA, OUTPUT);
   pinMode(in1, OUTPUT);
   pinMode(in2, OUTPUT);
@@ -106,13 +110,12 @@ void loop()
   Hour = now.hour();
   Minute = now.minute();
   Second = now.second();
-  tempC = Clock.getTemperature();
 }
 
 void ouverture(){
   Serial.println();
   Serial.print("Ouverture de la porte...");
-  while (digitalRead(pin_button) == HIGH){ // Tant que le bouton est en position High, le moteur tourne
+  while (digitalRead(pin_buttonA) == HIGH){ // Tant que le bouton est en position High, le moteur tourne
       //le moteur tourne
       digitalWrite(in1, HIGH);
       digitalWrite(in2, LOW);
@@ -121,19 +124,20 @@ void ouverture(){
   Serial.print("Porte ouverte ;-)");
   digitalWrite(in1, LOW);
   digitalWrite(in2, LOW);
-  i = 1;
+  i = 1; // I defini l'etat d'ouverture de la porte, ici i prend la valeur 1 ce qui signifie que la porte est ouverte
   delay(1000);
 }
+
 void fermeture(){
   Serial.println();
   Serial.print("Fermeture de la porte...");
-  while (digitalRead(pin_button) == HIGH){ // Tant que le bouton est en position High, le moteur tourne
+  while (digitalRead(pin_buttonB) == HIGH){ // Tant que le bouton est en position High, le moteur tourne
       //le moteur tourne
       digitalWrite(in1, LOW);
       digitalWrite(in2, HIGH);
   }
   Serial.println();
-  Serial.print("Porte fermé ;-)");
+  Serial.print("Porte ferme ;-)");
   digitalWrite(in1, LOW);
   digitalWrite(in2, LOW);
   i = 0;
@@ -336,5 +340,4 @@ void loop()
 ```
 
 ## 5/ Améliorations
- - Ajouter un second bouton poussoir. (Un poussoir pour la descente et un autre pour la montée).
  - Ajouter carte SD pour stocker les données de commandes d'horaire. Ce qui veut dire que les variables devront être lu dans un fichier qui se trouvera dans la SD carte. 

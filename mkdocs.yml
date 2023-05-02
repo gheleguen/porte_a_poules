@@ -4,8 +4,10 @@ edit_uri: -/edit/main/docs/
 
 nav:
     - Introduction: README.md
-    - b1. Prototype:
-      - b1.1 Moteur et RTC: dev_mot_et_rtc.md 
+    - Dev-Prototype:
+      - 0.0.1 Moteur piloté par horloge: dev_mot_et_rtc.md
+      - 0.0.2. Photo-résistance: dev_mot_rtc_photoR.md
+      
         
 theme:
     name: material
