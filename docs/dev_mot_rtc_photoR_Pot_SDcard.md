@@ -12,6 +12,8 @@ Troisième étape, insérer à notre système un moyen pour l'utilisateur de ré
 |Contrôleur moteur - Module L298N|![DevMR2-1](pictures/DevMR2-1.jpg)|Conrad / RS components|1|
 |Moteur DC (1,5-3v et son reducteur)|![DevMR2-2](pictures/DevMR2-2.jpg)|RS components|1|
 |Module horloge RTC DS3231|![DevMR2-3.jpg](pictures/DevMR2-3.jpg)|Conrad / RS components|1|
+|Module porte carte SD et SDHC *notes : ce modèle contient un convertisseur de tension permettant de l'alimenter en 5V comme en 3,3v*|![DevMR2-3.jpg](pictures/DevMRPPS2-1.jpg)|Conrad / RS components|1|
+|Carte Micro SD||Conrad / RS components|1|
 |Résistances 1Kohm ou autre valeur|||4|
 |Résistances 10Kohm|||1|
 |Boutons poussoirs|||2|
@@ -25,13 +27,13 @@ Troisième étape, insérer à notre système un moyen pour l'utilisateur de ré
  - Ordinateur
  - [Logiciel Arduino IDE](https://www.arduino.cc/en/software)
  - Câble USB type B vers USB. 
- 
-</br></br>
+
+</br></br> 
 ## 3/ Réalisation
 ### 3.1 Hardware
 Réaliser le circuit représenté ci dessous. Le fichier fritzing est disponible dans le dossier "hardware" du dépôt.
-![DevMR2-3.jpg](pictures/DevMRPP3-1.jpg)
 
+![DevMR2-3.jpg](pictures/DevMRPPS3-1.jpg)
 
 ### 3.2 Software
 Le code suivant se trouv aussi au format ".ino" dans l'archive dans le dossier "software" sous le nom de "dev_mot_et_rtc.ino".
@@ -42,10 +44,8 @@ Flasher au moyen d'Arduino IDE le code suivant :
 //Librairies
 #include <Wire.h>  
 #include "DS3231.h"
-
-//Librairies
-#include <Wire.h>  
-#include "DS3231.h"
+#include <SPI.h>
+#include <SD.h>
 
 RTClib RTC;
 DS3231 Clock;
@@ -60,6 +60,7 @@ int photoR = A0; // Port Analogique de la photo-résistance
 int PotHouv = A1; //Port analogique du potentiomètre 1
 int PotHferm = A2; // Port analogique du potentiomètre 2
 int PotLum = A3; // Port analogique du potentiomètre 3
+const int pinBranchementCS = 10; // Le « 10 » indiquant ici que la broche CS (SS) du lecteur de carte SD
 
 //Paramètres de déclenchements de la porte
 int Mouv = 0; // Minute d'ouverture
@@ -70,6 +71,8 @@ int vPotLum = 0;      // Variable où on stock la valeur du potentiomètre
 float Houv = 8;  // Variable où on stock l'heure d'ouverture
 float Hferm = 20;  // Variable où on stock l'heure de fermeture
 float LumD = 20;  // Variable où on stock le seuil de lumière qui sera utilisé
+const char* nomDuFichier = "log.csv"; // Nom du log sur carte SD
+File monFichier;
 
 //Introduction de variables
 int Year;
@@ -88,7 +91,8 @@ int PR; // Varible qui stockera la valeur de la photorésistance
 void setup()
 {
   Serial.begin(9600); //Initialise le moniteur série
-  Wire.begin(); //Initialisation du bu I2C
+  Wire.begin(); //Initialisation du bus I2C
+  SD.begin(pinBranchementCS); // démarre le lecteur de carte SD
   
   // Defini tous les ports du controleur moteur comme des sorties
   pinMode(enA, OUTPUT);
@@ -114,7 +118,7 @@ void loop()
   vPotHferm = analogRead(PotHferm); // on lit la valeur du potentiometre 2
   vPotLum = analogRead(PotLum); // on lit la valeur du potentiometre 3
   Houv = ((vPotHouv*7.00/1023.00)+3); // Calcul de l'heure d'ouverture
-  Hferm = ((vPotHferm*8.00/1023.00)+15); // Calcul de l'heure de fermeture
+  Hferm = ((vPotHferm*7.00/1023.00)+16); // Calcul de l'heure de fermeture
   LumD = ((vPotLum*400.00/1023.00)+623); // Calcul du seuil de luminosité 
   affichage();
   
@@ -135,6 +139,31 @@ void loop()
 
 // Fonction permettant l'ouverture de la porte
 void ouverture(){
+  monFichier = SD.open(nomDuFichier, FILE_WRITE);
+  if (monFichier) {
+    monFichier.print("ouverture");
+    monFichier.print(";");
+    monFichier.print(Year);
+    monFichier.print("-");
+    monFichier.print(Month);
+    monFichier.print("-");
+    monFichier.print(Date);
+    monFichier.print(";");
+    monFichier.print(Hour);
+    monFichier.print(":");
+    monFichier.print(Minute);
+    monFichier.print(";");
+    monFichier.print(Houv);
+    monFichier.print(";");
+    monFichier.print(Hferm);
+    monFichier.print(";");
+    monFichier.println(PR);
+    monFichier.close(); // Fermeture du fichier
+    Serial.println("Ecriture terminee.");
+  }
+  else {
+    Serial.println(F("Echec d'ouverture en ecriture, sur la carte SD !"));
+  }
   Serial.println();
   Serial.print("Ouverture de la porte...");
   while (digitalRead(pin_buttonA) == HIGH){ // Tant que le bouton est en position High, le moteur tourne
@@ -152,6 +181,31 @@ void ouverture(){
 
 // Fonction permettant la fermeture de la porte
 void fermeture(){
+    monFichier = SD.open(nomDuFichier, FILE_WRITE);
+  if (monFichier) {
+    monFichier.print("fermeture");
+    monFichier.print(";");
+    monFichier.print(Year);
+    monFichier.print("-");
+    monFichier.print(Month);
+    monFichier.print("-");
+    monFichier.print(Date);
+    monFichier.print(";");
+    monFichier.print(Hour);
+    monFichier.print(":");
+    monFichier.print(Minute);
+    monFichier.print(";");
+    monFichier.print(Houv);
+    monFichier.print(";");
+    monFichier.print(Hferm);
+    monFichier.print(";");
+    monFichier.println(PR);
+    monFichier.close(); // Fermeture du fichier
+    Serial.println("Ecriture terminee.");
+  }
+  else {
+    Serial.println(F("Echec d'ouverture en ecriture, sur la carte SD !"));
+  }
   Serial.println();
   Serial.print("Fermeture de la porte...");
   while (digitalRead(pin_buttonB) == HIGH){ // Tant que le bouton est en position High, le moteur tourne
@@ -192,162 +246,81 @@ void affichage() {
   Serial.println();
   Serial.print("Valeur actuel de la Photo-resistance : ");
   Serial.println(PR);
+  Serial.print("Valeur de i : ");
+  Serial.println(i);
 }
 ```
 
 </br></br>
 ## 4/ Références et développement. 
-J'ai dans un premier temps étudié le fonctionnement d'un potentiomètre. J'ai utilisé [ce tutoriel](https://ledisrupteurdimensionnel.com/arduino/lecture-potentiometre-entrees-analogiques-arduino/) qui donne un schèma de montage d'un potentiomètre : </br>
-![DevMRPP4-1](pictures/DevMRPP4-1.jpg)</br>
-*Crédit : Le distributeur dimensionnel.com*
+Toutes le informations à propos du branchement et de l'usage du module porte carte SD viennent d'un [excellent tutoriel de Passion electronique](https://passionelectronique.fr/carte-sd-arduino/)
 
- - La broche VCC devra être branché au 5V
- - La broche Out à une broche analogique (A0...A5)
- - La broche GND à une masse de l'Arduino
+**Branchements :** 
 
-J'ai utilisé son code que j'ai légèrement modifié (nommage de la broche de lecture du signal, ici A1).
+|Module lecteur SD|Uno|Nano|Mega|
+|------|------|------|------|
+|**Broche CS**|D10|D10|53|
+|**Broche SCK**|D13|D13|52|
+|**Broche MOSI**|D11|D11|51|
+|**Broche MISO**|D12|D12|50|
+|**Broche VCC**|5v|5v|5v|
+|**Broche GND**|GND|GND|GND|
 
+La librairie utilisé est "SD.h" une librairies installé par défaut avec Arduino IDE. Donc aucune installation de librairie n'est nécessaire.
+
+La présente documentation ne traite que l'écriture sur la carte SD, pour la lecture, consulter le tutoriel dont le lien figure plus haut. 
+
+On commence par déclarer les librairies utilisés : 
 ```cpp
-int valeur = 0;      // Variable où on stock la valeur du potentiomètre
-float tension = 0;  // Variable où on stock le voltage, la tension
-int PotH = A1;      // Variable qui stock la broche du potentiomètre
-
-void setup() {
-  Serial.begin(9600); // Initialisons la communication sérial
-}
-
-void loop() {
-  valeur = analogRead(PotH);           // on lit la valeur du pin A0 
-  tension = (valeur*5.00/1023.00);   // on calcule la tension
-  Serial.print("valeur analogique: ");
-  Serial.print(valeur);
-
-  Serial.print(" tension: ");
-  Serial.print(tension);
-  Serial.println("V");
-  delay(1000);
-}
+#include <SPI.h>
+#include <SD.h>
 ```
 
-Ce code renvoi via le moniteur série une valeur analogique de 0 à 1023 quelque soit la valeur du potentiomètre utilisé. 
-Il renvoi aussi une valeur de tension obtenu par un produit en crois détaillé dans le tutoriel. Je vais modifier ces valeurs pour calculer non pas une tension mais un horaire. Ce qui permettra au potentiomètre de régler une heure allant de 3h du matin à 10h.
-
+Puis il faudra initialiser la classe "SD". Egalement il ser nécéssaire de préciser le branchement de la PIN CS (ou SS), ici sur D10. 
 ```cpp
-int vPot = 0;      // Variable où on stock la valeur du potentiomètre
-float Houv = 8;  // Variable où on stock le voltage, la tension
-int PotH = A1;      // Variable qui stock la broche du potentiomètre
-
-void setup() {
-  Serial.begin(9600); // Initialisons la communication sérial
-}
-
-void loop() {
-  vPot = analogRead(PotH);           // on lit la valeur du pin A1 
-  Houv = ((vPot*7.00/1023.00)+3);  
-  Serial.print("valeur analogique: ");
-  Serial.print(vPot);
-
-  Serial.print(" Heure minimale d'ouverture: ");
-  Serial.print(Houv);
-  Serial.println("H am");
-  delay(1000);
-}
+const int pinBranchementCS = 10; // Le « 10 » indiquant ici que la broche CS (SS) de votre lecteur de carte SD est branché sur la pin D10 de votre Arduino
+SD.begin(pinBranchementCS); // Cette fonction retournere "True" si l'initialisation est ok. Elle pourra être utilisé pour générer un message d'erreur. 
 ```
 
-J'ai encore un peu modifier le code afin d'ajouter un second potentiomètre pour l'heure de fermeture. 
+Pour finir dans init, il faudra déclarer la variable "nomDuFichier" :
 ```cpp
-int vPotHouv = 0;      // Variable où on stock la valeur du potentiomètre
-int vPotHferm = 0;      // Variable où on stock la valeur du potentiomètre
-float Houv = 8;  // Variable où on stock le voltage, la tension
-float Hferm = 20;  // Variable où on stock le voltage, la tension
-int PotHouv = A1;      // Variable qui stock la broche du potentiomètre
-int PotHferm = A2;      // Variable qui stock la broche du potentiomètre
-
-void setup() {
-  Serial.begin(9600); // Initialisons la communication sérial
-}
-
-void loop() {
-  vPotHouv = analogRead(PotHouv);           // on lit la valeur du pin A0 
-  vPotHferm = analogRead(PotHferm);           // on lit la valeur du pin A0 
-  Houv = ((vPotHouv*7.00/1023.00)+3); 
-  Hferm = ((vPotHferm*7.00/1023.00)+16);  
-  Serial.print("valeur analogique ouverture: ");
-  Serial.print(vPotHouv);
-  Serial.println();
-  Serial.print("valeur analogique fermeture: ");
-  Serial.print(vPotHferm);
-  Serial.println();
-  Serial.print("Heure minimale d'ouverture: ");
-  Serial.print(Houv);
-  Serial.println(" H");
-  Serial.print("Heure minimale de fermeture: ");
-  Serial.print(Hferm);
-  Serial.println(" H");
-  delay(2000);
-}
+const char* nomDuFichier = "log.csv"; // Nom du log sur carte SD
 ```
 
-Pour finir j'ajoute un troisième potentiomètre qui permettra de régler le seuil de luminosité à laquelle on souhaite que la porte se déclenche. 
-
+De plus, il faudra dans le ```void loop``` éxecuter une fonction "open". Cette fonction renverra une erreur si l'on essaye d'ouvrir un fichier en lecture qui n'existe pas. Mais en écriture dans le cas où le fichier n'existe pas il le créera. 
 ```cpp
-int vPotHouv = 0;      // Variable où on stock la valeur du potentiomètre
-int vPotHferm = 0;      // Variable où on stock la valeur du potentiomètre
-int vPotLum = 0;      // Variable où on stock la valeur du potentiomètre
-float Houv = 8;  // Variable où on stock l'heure d'ouverture
-float Hferm = 20;  // Variable où on stock l'heure de fermeture
-float LumD = 20;  // Variable où on stock le seuil de lumière qui sera utilisé
-int PotHouv = A1;      // Variable qui stock la broche du potentiomètre 1
-int PotHferm = A2;      // Variable qui stock la broche du potentiomètre 2
-int PotLum = A3;      // Variable qui stock la broche du potentiomètre 3
-
-void setup() {
-  Serial.begin(9600); // Initialisons la communication sérial
-}
-
-void loop() {
-  vPotHouv = analogRead(PotHouv);           // on lit la valeur du pot 1 
-  vPotHferm = analogRead(PotHferm);           // on lit la valeur du pot 2
-  vPotLum = analogRead(PotLum);           // on lit la valeur du pot 3
-  Houv = ((vPotHouv*7.00/1023.00)+3); 
-  Hferm = ((vPotHferm*7.00/1023.00)+16);
-  LumD = ((vPotLum*400.00/1023.00)+623);   
-  Serial.print("Analog ouverture: ");
-  Serial.print(vPotHouv);
-  Serial.println();
-  Serial.print("Analog fermeture: ");
-  Serial.print(vPotHferm);
-  Serial.println();
-  Serial.print("Analog declenchement: ");
-  Serial.print(vPotLum);
-  Serial.println();
-  Serial.print("Heure minimale d'ouverture: ");
-  Serial.print(Houv);
-  Serial.println(" H");
-  Serial.print("Heure minimale de fermeture: ");
-  Serial.print(Hferm);
-  Serial.println(" H");
-  Serial.print("Seuil de declenchement : ");
-  Serial.print(LumD);
-  Serial.println();
-  delay(2000);
-}
+SD.open(nomDuFichier, FILE_WRITE); // Ouvr en écriture
+SD.open(nomDuFichier, FILE_READ); // Ouvre en lecture
 ```
 
-Ces codes permettent de faire varier les trois paramètres selon :
- - **Heure d'ouverture:** de 3,00h à 10,00h ;
- - **Heure de fermeture:** de 16,00h à 23,00h ;
- - **Seuil de luminosité de déclenchement:** de 623 à 1023 ;
-
-Pour finir, j'ai ajouté une condition dans le ```void setup``` pour définir la valeur de "i" (Etat Nuit ou Jour) afin que celui-ci soit toujours bon lorsque l'on redémarre l'Arduino. 
+Attention, lorsqu'un fichier n'est plus utilisé, il faut le refermer. On utilise pour cela la fonction "close".
 ```cpp
-  if (Hour >= Houv && Hour <Hferm) {
-    i = 1 ; // I prend 1 ce qui veut dire qu'il fait jour
-  }
-  else {
-    i = 0 ; // I prend 0 ce qui veut dire qu'il fait nuit
-  }
+SD.close();
 ```
+
+Voilà ce que donne une section d'écriture de texte dans le fichier en question : 
+
+```cpp
+    monFichier.print("ouverture");
+    monFichier.print(";");
+    monFichier.print(Year);
+    monFichier.print("-");
+    monFichier.print(Month);
+    monFichier.print("-");
+    monFichier.print(Date);
+    monFichier.print(";");
+    monFichier.print(Hour);
+    monFichier.print(":");
+    monFichier.print(Minute);
+    monFichier.print(";");
+    monFichier.print(Houv);
+    monFichier.print(";");
+    monFichier.print(Hferm);
+    monFichier.print(";");
+    monFichier.println(PR);
+    monFichier.close();   
+```
+Ici j'écris une ligne dans un csv séparé par des ";" pour pouvoir par la suite analyser ces données et faire des statistiques. 
 
 </br></br>
 ## 5/ Améliorations

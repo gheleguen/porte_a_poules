@@ -4,7 +4,7 @@ Seconde étape, insérer à notre système une lecture de l'intensité lumineuse
  - Ajouter une photo résistance
  - Il devra y avoir des heures de sécurité pour que même si la lumière augmente en peine nuit (lampe torche), la porte reste fermé.
 
-
+</br></br>
 ## 2/ Matériel et fournitures nécessaire
 ### 2.1 Fournitures
 |Dénomination|Visuel|Où se fournir ?|Qt|
@@ -25,7 +25,8 @@ Seconde étape, insérer à notre système une lecture de l'intensité lumineuse
  - Ordinateur
  - [Logiciel Arduino IDE](https://www.arduino.cc/en/software)
  - Câble USB type B vers USB. 
- 
+
+</br></br>
 ## 3/ Réalisation
 ### 3.1 Hardware
 Réaliser le circuit représenté ci dessous. Le fichier fritzing est disponible dans le dossier "hardware" du dépôt.
@@ -152,6 +153,8 @@ void fermeture(){
 }
 ```
 
+
+</br></br>
 ## 4/ Références et développement. 
 Je me suis servi de [ce tutoriel](https://www.carnetdumaker.net/articles/mesurer-la-luminosite-ambiante-avec-une-photoresistance-et-une-carte-arduino-genuino/). Le branchement est celui d'un diviseur de tension (2 résistances). </br>![DevMRP4-1](pictures/DevMRP4-1.jpg)</br>
 *crédit : © TamiaLab 2016*
@@ -180,6 +183,8 @@ void loop() {
   delay(250);
 }
 ```
+
+</br></br>
 ## 5/ Améliorations
  - Ajouter un module de carte SD qui contiendra les valeurs des variables. Pour ne pas avoir à flasher la carte pour chaque besoin. 
  - Ajouter un écran LCD pour donner l'heure des dernières ouvertures, fermetures et valeur de lumière. 

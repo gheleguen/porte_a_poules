@@ -1,10 +1,8 @@
 //Librairies
 #include <Wire.h>  
 #include "DS3231.h"
-
-//Librairies
-#include <Wire.h>  
-#include "DS3231.h"
+#include <SPI.h>
+#include <SD.h>
 
 RTClib RTC;
 DS3231 Clock;
@@ -19,6 +17,7 @@ int photoR = A0; // Port Analogique de la photo-résistance
 int PotHouv = A1; //Port analogique du potentiomètre 1
 int PotHferm = A2; // Port analogique du potentiomètre 2
 int PotLum = A3; // Port analogique du potentiomètre 3
+const int pinBranchementCS = 10; // Le « 10 » indiquant ici que la broche CS (SS) du lecteur de carte SD
 
 //Paramètres de déclenchements de la porte
 int Mouv = 0; // Minute d'ouverture
@@ -29,6 +28,8 @@ int vPotLum = 0;      // Variable où on stock la valeur du potentiomètre
 float Houv = 8;  // Variable où on stock l'heure d'ouverture
 float Hferm = 20;  // Variable où on stock l'heure de fermeture
 float LumD = 20;  // Variable où on stock le seuil de lumière qui sera utilisé
+const char* nomDuFichier = "log.csv"; // Nom du log sur carte SD
+File monFichier;
 
 //Introduction de variables
 int Year;
@@ -47,7 +48,8 @@ int PR; // Varible qui stockera la valeur de la photorésistance
 void setup()
 {
   Serial.begin(9600); //Initialise le moniteur série
-  Wire.begin(); //Initialisation du bu I2C
+  Wire.begin(); //Initialisation du bus I2C
+  SD.begin(pinBranchementCS); // démarre le lecteur de carte SD
   
   // Defini tous les ports du controleur moteur comme des sorties
   pinMode(enA, OUTPUT);
@@ -73,7 +75,7 @@ void loop()
   vPotHferm = analogRead(PotHferm); // on lit la valeur du potentiometre 2
   vPotLum = analogRead(PotLum); // on lit la valeur du potentiometre 3
   Houv = ((vPotHouv*7.00/1023.00)+3); // Calcul de l'heure d'ouverture
-  Hferm = ((vPotHferm*8.00/1023.00)+15); // Calcul de l'heure de fermeture
+  Hferm = ((vPotHferm*7.00/1023.00)+16); // Calcul de l'heure de fermeture
   LumD = ((vPotLum*400.00/1023.00)+623); // Calcul du seuil de luminosité 
   affichage();
   
@@ -94,6 +96,31 @@ void loop()
 
 // Fonction permettant l'ouverture de la porte
 void ouverture(){
+  monFichier = SD.open(nomDuFichier, FILE_WRITE);
+  if (monFichier) {
+    monFichier.print("ouverture");
+    monFichier.print(";");
+    monFichier.print(Year);
+    monFichier.print("-");
+    monFichier.print(Month);
+    monFichier.print("-");
+    monFichier.print(Date);
+    monFichier.print(";");
+    monFichier.print(Hour);
+    monFichier.print(":");
+    monFichier.print(Minute);
+    monFichier.print(";");
+    monFichier.print(Houv);
+    monFichier.print(";");
+    monFichier.print(Hferm);
+    monFichier.print(";");
+    monFichier.println(PR);
+    monFichier.close(); // Fermeture du fichier
+    Serial.println("Ecriture terminee.");
+  }
+  else {
+    Serial.println(F("Echec d'ouverture en ecriture, sur la carte SD !"));
+  }
   Serial.println();
   Serial.print("Ouverture de la porte...");
   while (digitalRead(pin_buttonA) == HIGH){ // Tant que le bouton est en position High, le moteur tourne
@@ -111,6 +138,31 @@ void ouverture(){
 
 // Fonction permettant la fermeture de la porte
 void fermeture(){
+    monFichier = SD.open(nomDuFichier, FILE_WRITE);
+  if (monFichier) {
+    monFichier.print("fermeture");
+    monFichier.print(";");
+    monFichier.print(Year);
+    monFichier.print("-");
+    monFichier.print(Month);
+    monFichier.print("-");
+    monFichier.print(Date);
+    monFichier.print(";");
+    monFichier.print(Hour);
+    monFichier.print(":");
+    monFichier.print(Minute);
+    monFichier.print(";");
+    monFichier.print(Houv);
+    monFichier.print(";");
+    monFichier.print(Hferm);
+    monFichier.print(";");
+    monFichier.println(PR);
+    monFichier.close(); // Fermeture du fichier
+    Serial.println("Ecriture terminee.");
+  }
+  else {
+    Serial.println(F("Echec d'ouverture en ecriture, sur la carte SD !"));
+  }
   Serial.println();
   Serial.print("Fermeture de la porte...");
   while (digitalRead(pin_buttonB) == HIGH){ // Tant que le bouton est en position High, le moteur tourne
@@ -151,4 +203,6 @@ void affichage() {
   Serial.println();
   Serial.print("Valeur actuel de la Photo-resistance : ");
   Serial.println(PR);
+  Serial.print("Valeur de i : ");
+  Serial.println(i);
 }
