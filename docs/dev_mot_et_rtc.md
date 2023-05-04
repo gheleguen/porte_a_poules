@@ -15,7 +15,7 @@ La première étape du développement de cet outil est de chercher à piloter un
 |Module horloge RTC DS3231|![DevMR2-3.jpg](pictures/DevMR2-3.jpg)|Conrad / RS components|1|
 |Résistances 1Kohm ou autre valeur|||4|
 |Boutons poussoirs|||2|
-|Batterie 9V ou Bloc piles 9v et pile||Conrad / RS components|1|
+|Batterie 5-6V ou Bloc piles 4* AA et piles||Conrad / RS components|1|
 |Breadbord|||1|
 |Fils de breadbord mâle-mâle et femelle-mâle||||
 

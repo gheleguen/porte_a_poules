@@ -17,7 +17,7 @@ Seconde étape, insérer à notre système une lecture de l'intensité lumineuse
 |Résistances 10Kohm|||1|
 |Boutons poussoirs|||2|
 |Photo-résistance|||1|
-|Batterie 9V ou Bloc piles 9v et pile||Conrad / RS components|1|
+|Batterie 5-6V ou Bloc piles 4* AA et piles||Conrad / RS components|1|
 |Breadbord|||1|
 |Fils de breadbord mâle-mâle et femelle-mâle||||
 
