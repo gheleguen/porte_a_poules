@@ -3,7 +3,7 @@
 Troisième étape, insérer à notre système un moyen pour l'utilisateur de régler les paramètres. 
  - 3 potentiomètres (2 pour l'heure d'ouverture et de fermeture / 1 pour le seuil de lumière)
 
-
+</br></br>
 ## 2/ Matériel et fournitures nécessaire
 ### 2.1 Fournitures
 |Dénomination|Visuel|Où se fournir ?|Qt|
@@ -26,10 +26,12 @@ Troisième étape, insérer à notre système un moyen pour l'utilisateur de ré
  - [Logiciel Arduino IDE](https://www.arduino.cc/en/software)
  - Câble USB type B vers USB. 
  
+</br></br>
 ## 3/ Réalisation
 ### 3.1 Hardware
 Réaliser le circuit représenté ci dessous. Le fichier fritzing est disponible dans le dossier "hardware" du dépôt.
 ![DevMR2-3.jpg](pictures/DevMRPP3-1.jpg)
+
 
 ### 3.2 Software
 Le code suivant se trouv aussi au format ".ino" dans l'archive dans le dossier "software" sous le nom de "dev_mot_et_rtc.ino".
@@ -193,6 +195,7 @@ void affichage() {
 }
 ```
 
+</br></br>
 ## 4/ Références et développement. 
 J'ai dans un premier temps étudié le fonctionnement d'un potentiomètre. J'ai utilisé [ce tutoriel](https://ledisrupteurdimensionnel.com/arduino/lecture-potentiometre-entrees-analogiques-arduino/) qui donne un schèma de montage d'un potentiomètre : </br>
 ![DevMRPP4-1](pictures/DevMRPP4-1.jpg)</br>
@@ -346,6 +349,7 @@ Pour finir, j'ai ajouté une condition dans le ```void setup``` pour définir la
   }
 ```
 
+</br></br>
 ## 5/ Améliorations
  - Ajouter un écran LCD pour donner l'heure des dernières ouvertures, fermetures et valeur de lumière. 
  - Si la lecture de l'intensité lumineuse pose un problème, peut-être étudier des techniques de lissage de courbe tel qu'utiliser une moyenne glissante, [comme documenté ici](https://www.aranacorp.com/fr/implementation-de-la-moyenne-glissante-dans-arduino/#:~:text=Le%20principe%20de%20la%20moyenne,l'%C3%A9tablissement%20de%20la%20moyenne.).

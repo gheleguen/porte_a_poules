@@ -1,4 +1,4 @@
-# DEV 2 -- Upgrade du système en ajoutant une contrainte de 
+# 0.0.2 -- Ajout d'un capteur de lumière 
 ## 1/ Introduction
 Seconde étape, insérer à notre système une lecture de l'intensité lumineuse ambiante. 
  - Ajouter une photo résistance

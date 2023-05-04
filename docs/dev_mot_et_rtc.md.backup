@@ -1,10 +1,10 @@
-# DEV -- Un moteur piloté à l'heure
+# 0.0.1 -- Un moteur piloté à l'heure
 ## 1/ Introduction
 La première étape du développement de cet outil est de chercher à piloter un moteur à courant continu de 1,5 à 3V au moyen d'une arduino UNO et d'une RTC pour donner l'heure. 
  - Dans cette configuration 2 boutons poussoirs symbolisent, les deux fins de courses. Le moteur devra s'arrêté lorsque le bouton sera enclenché de fin de course correspondant sera enclenché.
  - Une RTC permettra de fournir l'heure en temps réel. Cette donnée permet à la porte de s'ouvrir et de se fermer. 
 
-
+</br></br>
 ## 2/ Matériel et fournitures nécessaire
 ### 2.1 Fournitures
 |Dénomination|Visuel|Où se fournir ?|Qt|
@@ -23,7 +23,8 @@ La première étape du développement de cet outil est de chercher à piloter un
  - Ordinateur
  - [Logiciel Arduino IDE](https://www.arduino.cc/en/software)
  - Câble USB type B vers USB. 
- 
+
+</br></br> 
 ## 3/ Réalisation
 ### 3.1 Hardware
 Réaliser le circuit représenté ci dessous. [Le fichier fritzing est accessible ici](../hardware)
@@ -145,6 +146,7 @@ void fermeture(){
 }
 ```
 
+</br></br>
 ## 4/ Références et développement. 
 J'ai commencé par tester des codes proposé sur le web. Mais tous me rendent des erreurs lié à des librairies.
  - [Ce Tutoriel est réalisé à partir d'un L298N](https://www.instructables.com/Chicken-Coop-Door-Arduino-Based/). Son code ne fonctionne pas du fait d'erreur sur les librairies.
@@ -339,5 +341,6 @@ void loop()
 }
 ```
 
+</br></br>
 ## 5/ Améliorations
  - Ajouter carte SD pour stocker les données de commandes d'horaire. Ce qui veut dire que les variables devront être lu dans un fichier qui se trouvera dans la SD carte. 

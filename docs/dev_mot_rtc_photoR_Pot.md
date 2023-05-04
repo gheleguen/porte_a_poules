@@ -1,5 +1,4 @@
-# DEV 2 -- Upgrade du système en ajoutant une contrainte de 
-## 1/ Introduction
+# 0.0.3 -- Trois potentiomètres pour permettre à l'utilisateur de faire les réglages
 Troisième étape, insérer à notre système un moyen pour l'utilisateur de régler les paramètres. 
  - 3 potentiomètres (2 pour l'heure d'ouverture et de fermeture / 1 pour le seuil de lumière)
 
