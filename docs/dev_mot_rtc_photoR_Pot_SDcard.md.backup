@@ -1,9 +1,9 @@
 # DEV 2 -- Upgrade du système en ajoutant une contrainte de 
 ## 1/ Introduction
-Troisième étape, insérer à notre système un moyen pour l'utilisateur de régler les paramètres. 
+Quatrième étape, ajouter un moyen de contrôler le travail de la porte à poules. Ici, je propose l'ajout d'un lecteur de carte SD. Le système écrira dans un fichier "log.csv" les informations d'heure et de date d'ouverture et de fermeture de la porte. Ainsi que les 3 paramètres variables (Heure d'ouverture, Heure de fermeture et )
  - 3 potentiomètres (2 pour l'heure d'ouverture et de fermeture / 1 pour le seuil de lumière)
 
-</br>
+</br></br>
 ## 2/ Matériel et fournitures nécessaire
 ### 2.1 Fournitures
 |Dénomination|Visuel|Où se fournir ?|Qt|
@@ -27,7 +27,8 @@ Troisième étape, insérer à notre système un moyen pour l'utilisateur de ré
  - Ordinateur
  - [Logiciel Arduino IDE](https://www.arduino.cc/en/software)
  - Câble USB type B vers USB. 
- 
+
+</br></br> 
 ## 3/ Réalisation
 ### 3.1 Hardware
 Réaliser le circuit représenté ci dessous. Le fichier fritzing est disponible dans le dossier "hardware" du dépôt.
@@ -250,6 +251,7 @@ void affichage() {
 }
 ```
 
+</br></br>
 ## 4/ Références et développement. 
 Toutes le informations à propos du branchement et de l'usage du module porte carte SD viennent d'un [excellent tutoriel de Passion electronique](https://passionelectronique.fr/carte-sd-arduino/)
 
@@ -320,7 +322,7 @@ Voilà ce que donne une section d'écriture de texte dans le fichier en question
 ```
 Ici j'écris une ligne dans un csv séparé par des ";" pour pouvoir par la suite analyser ces données et faire des statistiques. 
 
-
+</br></br>
 ## 5/ Améliorations
  - Ajouter un écran LCD pour donner l'heure des dernières ouvertures, fermetures et valeur de lumière. 
  - Si la lecture de l'intensité lumineuse pose un problème, peut-être étudier des techniques de lissage de courbe tel qu'utiliser une moyenne glissante, [comme documenté ici](https://www.aranacorp.com/fr/implementation-de-la-moyenne-glissante-dans-arduino/#:~:text=Le%20principe%20de%20la%20moyenne,l'%C3%A9tablissement%20de%20la%20moyenne.).

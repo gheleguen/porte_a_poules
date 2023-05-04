@@ -1,7 +1,6 @@
 # DEV 2 -- Upgrade du système en ajoutant une contrainte de 
 ## 1/ Introduction
-Troisième étape, insérer à notre système un moyen pour l'utilisateur de régler les paramètres. 
- - 3 potentiomètres (2 pour l'heure d'ouverture et de fermeture / 1 pour le seuil de lumière)
+Quatrième étape, ajouter un moyen de contrôler le travail de la porte à poules. Ici, je propose l'ajout d'un lecteur de carte SD. Le système écrira dans un fichier "log.csv" les informations d'heure et de date d'ouverture et de fermeture de la porte. Ainsi que 3 paramètres suplémentaires (Heure d'ouverture, Heure de fermeture et l'intensité lumineuse au moment de la fermeture.)^
 
 </br></br>
 ## 2/ Matériel et fournitures nécessaire
