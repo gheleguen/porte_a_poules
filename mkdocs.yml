@@ -5,7 +5,6 @@ edit_uri: -/edit/main/docs/
 nav:
   - Introduction: README.md
   - ax/ Archives du développement:
-    - 0.0.4:
     - Elec/ Module carte SD pour écriture d'un LOG: dev_mot_rtc_photoR_Pot_SDcard.md
     - Energie/ Autonomie énergétique: dev_dim_batterie.md
     - 0.0.3 Potentiomètres pour régler les paramètres: dev_mot_rtc_photoR_Pot.md
