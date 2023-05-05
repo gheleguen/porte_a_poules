@@ -4,7 +4,7 @@ edit_uri: -/edit/main/docs/
 
 nav:
     - Introduction: README.md
-    - Développement et versions antérieurs
+    - Développement et versions antérieurs:
       - Anciennes versions:
         - 0.0.4. Module carte SD pour écriture d'un LOG: dev_mot_rtc_photoR_Pot_SDcard.md
         - 0.0.3. Potentiomètres pour régler les paramètres: dev_mot_rtc_photoR_Pot.md
