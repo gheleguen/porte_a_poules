@@ -4,15 +4,15 @@ edit_uri: -/edit/main/docs/
 
 nav:
     - Introduction: README.md
-    - Versions de développements:
-      - 0.0.4. Module carte SD pour écriture d'un LOG: dev_mot_rtc_photoR_Pot_SDcard.md
-      - 0.0.3. Potentiomètres pour régler les paramètres: dev_mot_rtc_photoR_Pot.md
-      - 0.0.2. Photo-résistance: dev_mot_rtc_photoR.md
-      - 0.0.1 Moteur piloté par horloge: dev_mot_et_rtc.md
-        
+    - Développement et versions antérieurs
+      - Anciennes versions:
+        - 0.0.4. Module carte SD pour écriture d'un LOG: dev_mot_rtc_photoR_Pot_SDcard.md
+        - 0.0.3. Potentiomètres pour régler les paramètres: dev_mot_rtc_photoR_Pot.md
+        - 0.0.2. Photo-résistance: dev_mot_rtc_photoR.md
+        - 0.0.1 Moteur piloté par horloge: dev_mot_et_rtc.md
+
 theme:
     name: material
-    custom_dir: material/.overrides
     palette:
       primary: yellow
 
