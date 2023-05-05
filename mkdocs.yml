@@ -4,13 +4,6 @@ edit_uri: -/edit/main/docs/
 
 nav:
     - Introduction: README.md
-    - I/ Sourcer:
-    - II/ Assemblage:
-      - Fabrication des pièces: 
-      - Guide d'assemblage:
-    	- Installation du software:
-    - III/ Test et usages:
-    - IV/ Contribuer:
     - ax/ Archives du développement:
       - 0.0.4:
     	  - Elec/ Module carte SD pour écriture d'un LOG: dev_mot_rtc_photoR_Pot_SDcard.md
