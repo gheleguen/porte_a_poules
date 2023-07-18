@@ -4,6 +4,9 @@ edit_uri: -/edit/main/docs/
 
 nav:
   - Introduction: README.md
+  - 1/Matériels et fournitures : 0-1-0_tools_materials.md
+  - 2/Câblage: 0-1-0_wire_setup.md
+  - 3/Intégration: 0-1-0_integration.md
   - ax/ Archives du développement:
     - 0.0.4:
       - Elec/ Module carte SD pour écriture d'un LOG: dev_mot_rtc_photoR_Pot_SDcard.md

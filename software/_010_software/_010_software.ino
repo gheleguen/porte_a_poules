@@ -1,45 +1,3 @@
-# 0.0.4 -- Elec -- Une carte SD qui stocke un LOG pour le débogage 
-## 1/ Introduction
-Quatrième étape, ajouter un moyen de contrôler le travail de la porte à poules. Ici, je propose l'ajout d'un lecteur de carte SD. Le système écrira dans un fichier "log.csv" les informations d'heure et de date d'ouverture et de fermeture de la porte. Ainsi que 3 paramètres suplémentaires (Heure d'ouverture, Heure de fermeture et l'intensité lumineuse au moment de la fermeture.)^
-
-</br></br>
-## 2/ Matériel et fournitures nécessaire
-### 2.1 Fournitures
-|Dénomination|Visuel|Où se fournir ?|Qt|
-|------|------|-----|--|
-|Arduino UNO|![DevMR2-3.jpg](pictures/DevMR2-4.jpg)|Conrad / RS components|1|
-|Contrôleur moteur - Module L298N|![DevMR2-1](pictures/DevMR2-1.jpg)|Conrad / RS components|1|
-|Moteur DC (1,5-3v et son reducteur)|![DevMR2-2](pictures/DevMR2-2.jpg)|RS components|1|
-|Module horloge RTC DS3231|![DevMR2-3.jpg](pictures/DevMR2-3.jpg)|Conrad / RS components|1|
-|Module porte carte SD et SDHC *notes : ce modèle contient un convertisseur de tension permettant de l'alimenter en 5V comme en 3,3v*|![DevMR2-3.jpg](pictures/DevMRPPS2-1.jpg)|Conrad / RS components|1|
-|Carte Micro SD||Conrad / RS components|1|
-|Résistances 1Kohm ou autre valeur|||4|
-|Résistances 10Kohm|||1|
-|Boutons poussoirs|||2|
-|Photo-résistance|||1|
-|Batterie 5-6V ou Bloc piles 4* AA et piles||Conrad / RS components|1|
-|Potentiomètres||Conrad / RS components|3|
-|Breadbord|||1|
-|Fils de breadbord mâle-mâle et femelle-mâle||||
-
-### 2.2 Matériel
- - Ordinateur
- - [Logiciel Arduino IDE](https://www.arduino.cc/en/software)
- - Câble USB type B vers USB. 
-
-</br></br> 
-## 3/ Réalisation
-### 3.1 Hardware
-Réaliser le circuit représenté ci dessous. Le fichier fritzing est disponible dans le dossier "hardware" du dépôt.
-
-![DevMR2-3.jpg](pictures/DevMRPPS3-1.jpg)
-
-### 3.2 Software
-Le code suivant se trouve aussi au format ".ino" dans l'archive dans le dossier "software" sous le nom de "dev_mot_et_rtc.ino".
-
-Flasher au moyen d'Arduino IDE le code suivant :
-
-```cpp
 //Librairies
 #include <Wire.h>  
 #include "DS3231.h"
@@ -57,8 +15,8 @@ int pin_buttonA = 7; // port numérique lié au bouton poussoir 1
 int pin_buttonB = 8; // port numérique lié au bouton poussoir 2
 int photoR = A0; // Port Analogique de la photo-résistance
 int PotHouv = A1; //Port analogique du potentiomètre 1
-int PotHferm = A2; // Port analogique du potentiomètre 2
-int PotLum = A3; // Port analogique du potentiomètre 3
+int PotHferm = A3; // Port analogique du potentiomètre 2
+int PotLum = A2; // Port analogique du potentiomètre 3
 const int pinBranchementCS = 10; // Le « 10 » indiquant ici que la broche CS (SS) du lecteur de carte SD
 
 //Paramètres de déclenchements de la porte
@@ -118,7 +76,7 @@ void loop()
   vPotLum = analogRead(PotLum); // on lit la valeur du potentiometre 3
   Houv = ((vPotHouv*7.00/1023.00)+3); // Calcul de l'heure d'ouverture
   Hferm = ((vPotHferm*7.00/1023.00)+16); // Calcul de l'heure de fermeture
-  LumD = ((vPotLum*400.00/1023.00)+623); // Calcul du seuil de luminosité 
+  LumD = ((vPotLum*1000.00/1023.00)); // Calcul du seuil de luminosité 
   affichage();
   
   if (Hour >= Houv && Hour < Hferm && i == 0 && PR > LumD) { // Si l'heure est supérieur à l'heure minimale d'ouverture et que la porte est fermé
@@ -248,80 +206,3 @@ void affichage() {
   Serial.print("Valeur de i : ");
   Serial.println(i);
 }
-```
-
-</br></br>
-## 4/ Références et développement. 
-Toutes le informations à propos du branchement et de l'usage du module porte carte SD viennent d'un [excellent tutoriel de Passion electronique](https://passionelectronique.fr/carte-sd-arduino/)
-
-**Branchements :** 
-
-|Module lecteur SD|Uno|Nano|Mega|
-|------|------|------|------|
-|**Broche CS**|D10|D10|53|
-|**Broche SCK**|D13|D13|52|
-|**Broche MOSI**|D11|D11|51|
-|**Broche MISO**|D12|D12|50|
-|**Broche VCC**|5v|5v|5v|
-|**Broche GND**|GND|GND|GND|
-
-La librairie utilisé est "SD.h" une librairies installé par défaut avec Arduino IDE. Donc aucune installation de librairie n'est nécessaire.
-
-La présente documentation ne traite que l'écriture sur la carte SD, pour la lecture, consulter le tutoriel dont le lien figure plus haut. 
-
-On commence par déclarer les librairies utilisés : 
-```cpp
-#include <SPI.h>
-#include <SD.h>
-```
-
-Puis il faudra initialiser la classe "SD". Egalement il ser nécéssaire de préciser le branchement de la PIN CS (ou SS), ici sur D10. 
-```cpp
-const int pinBranchementCS = 10; // Le « 10 » indiquant ici que la broche CS (SS) de votre lecteur de carte SD est branché sur la pin D10 de votre Arduino
-SD.begin(pinBranchementCS); // Cette fonction retournere "True" si l'initialisation est ok. Elle pourra être utilisé pour générer un message d'erreur. 
-```
-
-Pour finir dans init, il faudra déclarer la variable "nomDuFichier" :
-```cpp
-const char* nomDuFichier = "log.csv"; // Nom du log sur carte SD
-```
-
-De plus, il faudra dans le ```void loop``` éxecuter une fonction "open". Cette fonction renverra une erreur si l'on essaye d'ouvrir un fichier en lecture qui n'existe pas. Mais en écriture dans le cas où le fichier n'existe pas il le créera. 
-```cpp
-SD.open(nomDuFichier, FILE_WRITE); // Ouvr en écriture
-SD.open(nomDuFichier, FILE_READ); // Ouvre en lecture
-```
-
-Attention, lorsqu'un fichier n'est plus utilisé, il faut le refermer. On utilise pour cela la fonction "close".
-```cpp
-SD.close();
-```
-
-Voilà ce que donne une section d'écriture de texte dans le fichier en question : 
-
-```cpp
-    monFichier.print("ouverture");
-    monFichier.print(";");
-    monFichier.print(Year);
-    monFichier.print("-");
-    monFichier.print(Month);
-    monFichier.print("-");
-    monFichier.print(Date);
-    monFichier.print(";");
-    monFichier.print(Hour);
-    monFichier.print(":");
-    monFichier.print(Minute);
-    monFichier.print(";");
-    monFichier.print(Houv);
-    monFichier.print(";");
-    monFichier.print(Hferm);
-    monFichier.print(";");
-    monFichier.println(PR);
-    monFichier.close();   
-```
-Ici j'écris une ligne dans un csv séparé par des ";" pour pouvoir par la suite analyser ces données et faire des statistiques. 
-
-</br></br>
-## 5/ Améliorations
- - Ajouter un écran LCD pour donner l'heure des dernières ouvertures, fermetures et valeur de lumière. 
- - Si la lecture de l'intensité lumineuse pose un problème, peut-être étudier des techniques de lissage de courbe tel qu'utiliser une moyenne glissante, [comme documenté ici](https://www.aranacorp.com/fr/implementation-de-la-moyenne-glissante-dans-arduino/#:~:text=Le%20principe%20de%20la%20moyenne,l'%C3%A9tablissement%20de%20la%20moyenne.).

@@ -17,7 +17,7 @@ Quatrième étape, ajouter un moyen de contrôler le travail de la porte à poul
 |Résistances 10Kohm|||1|
 |Boutons poussoirs|||2|
 |Photo-résistance|||1|
-|Batterie 9V ou Bloc piles 9v et pile||Conrad / RS components|1|
+|Batterie 5-6V ou Bloc piles 4* AA et piles||Conrad / RS components|1|
 |Potentiomètres||Conrad / RS components|3|
 |Breadbord|||1|
 |Fils de breadbord mâle-mâle et femelle-mâle||||
@@ -35,7 +35,7 @@ Réaliser le circuit représenté ci dessous. Le fichier fritzing est disponible
 ![DevMR2-3.jpg](pictures/DevMRPPS3-1.jpg)
 
 ### 3.2 Software
-Le code suivant se trouv aussi au format ".ino" dans l'archive dans le dossier "software" sous le nom de "dev_mot_et_rtc.ino".
+Le code suivant se trouve aussi au format ".ino" dans l'archive dans le dossier "software" sous le nom de "dev_mot_et_rtc.ino".
 
 Flasher au moyen d'Arduino IDE le code suivant :
 

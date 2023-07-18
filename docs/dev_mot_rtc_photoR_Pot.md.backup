@@ -1,12 +1,11 @@
-# DEV 2 -- Upgrade du système en ajoutant une contrainte de 
-## 1/ Introduction
+# 0.0.3 -- Trois potentiomètres pour permettre à l'utilisateur de faire les réglages
 Troisième étape, insérer à notre système un moyen pour l'utilisateur de régler les paramètres. 
  - 3 potentiomètres (2 pour l'heure d'ouverture et de fermeture / 1 pour le seuil de lumière)
 
 </br></br>
 ## 2/ Matériel et fournitures nécessaire
 ### 2.1 Fournitures
-|Dénomination|Visuel|Où se fournir ?|Qt|
+|Dénomination|Visuel|Mes fournitures|Qt|
 |------|------|-----|--|
 |Arduino UNO|![DevMR2-3.jpg](pictures/DevMR2-4.jpg)|Conrad / RS components|1|
 |Contrôleur moteur - Module L298N|![DevMR2-1](pictures/DevMR2-1.jpg)|Conrad / RS components|1|

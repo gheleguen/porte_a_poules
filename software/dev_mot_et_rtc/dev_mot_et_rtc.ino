@@ -5,10 +5,10 @@ RTClib RTC;
 DS3231 Clock;
 
 //Paramètres de déclenchements de la porte
-int Houv = 8; // Heure d'ouverture
-int Mouv = 0; // Minute d'ouverture
-int Hferm = 17; //Heure de fermeture
-int Mferm = 0; // Minute de fermeture
+int Houv = 11; // Heure d'ouverture
+int Mouv = 30; // Minute d'ouverture
+int Hferm = 11; //Heure de fermeture
+int Mferm = 31; // Minute de fermeture
 
 // Branchements
 int enA = 4; 
