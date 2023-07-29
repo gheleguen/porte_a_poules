@@ -1,4 +1,14 @@
-# README
+# Porte à poules
 
 
-Test du readme
+Ce projet de porte à poule est destiné à automatiser l'ouverture et la fermeture d'un poulailler. Il est équipé d'un capteur de lumière et d'une horloge en temps réel. Le déclenchement de la porte se fait donc à partir d'une certaine heure (défini par l'utilisateur au moyen de potentiomètres) quand la lulière passe en dessous d'un certain seuil. 
+Le système est réalisé sur une base arduino avec un moto-réducteur à courant continu. L'alimentation est opéré par une batterie au plomb chargé par un petit panneau solaire.
+
+## Usage de la documentation
+
+Toutes la documentation est basé sur une archive git et hébergé sur [github](https://github.com/). 
+
+Pour fabriquer la porte à poule et de disposer de tous les documents et fichiers nécessaires, je vous recommande de copier l'archive sur votre ordinateur : 
+ - En vous rendant directement sur le projet github : https://github.com/gheleguen/porte_a_poules.
+ - Ou en exécutant sur un terminal la ligne de commande suivante : ```git clone https://github.com/gheleguen/porte_a_poules```
+

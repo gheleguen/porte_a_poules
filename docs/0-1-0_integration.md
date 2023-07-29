@@ -1,4 +1,6 @@
-# 0.1.0 -- 3/Montage élec
+# 3/Montage élec
+**Version 0.1.0**
+<br><br>
 ## 3.1 Introduction
 Le système est placé dans une boite étanche de dérivation que l'on trouve en magasin de bricolage. Des modèles 3D sont disponible dans l'archives pour imprimer en 3D les différentes pièces additionnels.
 

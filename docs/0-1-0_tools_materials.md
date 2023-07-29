@@ -1,5 +1,6 @@
-# 0.1.0 -- 1/Liste du matériel et fournitures
-
+# 1/Liste du matériel et fournitures
+**Version 0.1.0**
+<br><br>
 ## 1.1 Fournitures
 |Dénomination|Visuel|Où se fournir ?|Qt|
 |------|------|-----|--|

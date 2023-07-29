@@ -1,19 +1,24 @@
 site_name: porte_a_poules
-repo_url: https://gleguencloud.xyz/gitlab/gheleguen/porte_a_poules/
+repo_url: https://github.com/gheleguen/porte_a_poules
 edit_uri: -/edit/main/docs/
 
 nav:
   - Introduction: README.md
-  - 1/Matériels et fournitures : 0-1-0_tools_materials.md
-  - 2/Câblage: 0-1-0_wire_setup.md
-  - 3/Intégration: 0-1-0_integration.md
+  - I. Guide de fabrication:
+    - 1/ Matériels et fournitures : 0-1-0_tools_materials.md
+    - 2/ Câblage: 0-1-0_wire_setup.md
+    - 3/ Intégration: 0-1-0_integration.md
+    - 4/ Installation: 0-1-0_install.md
+  - II. Guide d'utilisation: 0-1-0_user_guide.md
+  - III. Contribuer : edit-this-doc_fr.md
+  - Licence: license.md
   - ax/ Archives du développement:
     - 0.0.4:
-      - Elec/ Module carte SD pour écriture d'un LOG: dev_mot_rtc_photoR_Pot_SDcard.md
-      - Energie/ Autonomie énergétique: dev_dim_batterie.md
-    - 0.0.3 Potentiomètres pour régler les paramètres: dev_mot_rtc_photoR_Pot.md
-    - 0.0.2 Photo-résistance: dev_mot_rtc_photoR.md
-    - 0.0.1 Moteur piloté par horloge: dev_mot_et_rtc.md
+      - Elec/ Module carte SD pour écriture d'un LOG: 0-0-4_dev_mot_rtc_photoR_Pot_SDcard.md
+      - Energie/ Autonomie énergétique: 0-0-4_dev_dim_batterie.md
+    - 0.0.3 Potentiomètres pour régler les paramètres: 0-0-3_dev_mot_rtc_photoR_Pot.md
+    - 0.0.2 Photo-résistance: 0-0-2_dev_mot_rtc_photoR.md
+    - 0.0.1 Moteur piloté par horloge: 0-0-1_dev_mot_et_rtc.md
 
 
 theme:

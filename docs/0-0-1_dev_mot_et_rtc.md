@@ -1,4 +1,5 @@
 # 0.0.1 -- Un moteur piloté à l'heure
+
 ## 1/ Introduction
 La première étape du développement de cet outil est de chercher à piloter un moteur à courant continu de 1,5 à 3V au moyen d'une arduino UNO et d'une RTC pour donner l'heure. 
  - Dans cette configuration 2 boutons poussoirs symbolisent, les deux fins de courses. Le moteur devra s'arrêté lorsque le bouton sera enclenché de fin de course correspondant sera enclenché.
