@@ -3,7 +3,7 @@ repo_url: https://github.com/gheleguen/porte_a_poules
 edit_uri: -/edit/main/docs/
 
 nav:
-  - Introduction: README.md
+  - Introduction: index.md
   - I. Guide de fabrication:
     - 1/ Matériels et fournitures : 0-1-0_tools_materials.md
     - 2/ Câblage: 0-1-0_wire_setup.md
@@ -28,10 +28,6 @@ theme:
 
 plugins:
   - search
-  - i18n:
-      default_language: fr
-      languages:
-        fr: Français
 
 markdown_extensions:
     - smarty
