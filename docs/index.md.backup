@@ -1,7 +1,7 @@
 # Porte à poules
 
 
-Une porte à poules est destinée à automatiser l'ouverture et la fermeture d'un poulailler. Il est équipé d'un capteur de lumière et d'une horloge en temps réel. Le déclenchement de la porte se fait donc à partir d'une certaine heure (défini par l'utilisateur au moyen de potentiomètres) et quand la lumière passe en dessous d'un certain seuil. 
+Une porte à poules est destiné à automatiser l'ouverture et la fermeture d'un poulailler. Il est équipé d'un capteur de lumière et d'une horloge en temps réel. Le déclenchement de la porte se fait donc à partir d'une certaine heure (défini par l'utilisateur au moyen de potentiomètres) et quand la lumière passe en dessous d'un certain seuil. 
 
 Le système est réalisé sur une base arduino avec un moto-réducteur à courant continu. L'alimentation est opéré par une batterie au plomb chargé par un petit panneau solaire.
 
